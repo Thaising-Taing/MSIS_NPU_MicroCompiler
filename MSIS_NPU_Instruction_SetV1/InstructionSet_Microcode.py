@@ -174,9 +174,7 @@ def Conv_MicroGen(conv_idx, model, Ops, hscale_idx, H_scale,
     else: 
         qparam_write(OPCODE["SETREG"], OPERAND1[f"QU_PARAM1"], H_Shift, H_scale[hscale_idx[0]])
         
-    if len(hscale_idx) == 1: branch = 0
-    elif len(hscale_idx) == 2: branch = 1
-    else: branch = 3
+    branch = len(hscale_idx) - 1
 
     if Ops.startswith("ConvActMax"):
         if Conv.groups != 1: 
@@ -269,9 +267,7 @@ def Conv_ScriptGen(conv_idx, model, Ops, hscale_idx, H_scale,
         else: 
             script.write(f'qparam_write(OPCODE["SETREG"], OPERAND1[f"QU_PARAM1"], {H_Shift}, {H_scale[hscale_idx[0]]})\n')
             
-        if len(hscale_idx) == 1: branch = 0
-        elif len(hscale_idx) == 2: branch = 1
-        else: branch = 3
+        branch = len(hscale_idx) - 1
 
         if Ops.startswith("ConvActMax"):
             if Conv.groups != 1: 
