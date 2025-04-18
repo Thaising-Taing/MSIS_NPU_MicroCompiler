@@ -10,8 +10,8 @@ This MicroCompiler is combined of two different machine language version (Microc
 - YOLOv10n
 
 ### MicrocodeV2
-For more details related to Assembly Languages, Assembler, and MicrocodeV2, Please kindly reference to the following link: 
-* [MicrocodeV2](https://github.com/ultralytics):
+For more details related to Assembly Languages, Assembler, and MicrocodeV2, Please kindly refer to the following link: 
+* [MicrocodeV2](https://github.com/ultralytics)
 
 ## Pre-Requisite 
 ```bash
@@ -43,7 +43,7 @@ python MicroCompiler.py --model_name <model_name> --output_dir <dir_name> --imag
 ```
 
 ## Take Home Message
-If you want to extend to support more custom models, you can just add the new models into the MicroCompiler.py. Moreover, adding your calculating Activation Address into Model directory, and writing your own Architecture script for your custom models with listing down all the models' operations.
+If you want to extend to support more custom models, you can just add the new models into the MicroCompiler.py with your own Inference Code. Moreover, adding your calculating Activation Address into Model directory, and writing your own Architecture script for your custom models with listing down all the models' operations.
 
 ## Contact
 Thaising Taing - thaisingtaing@chungbuk.ac.kr
