@@ -11,8 +11,11 @@ from tabulate import tabulate
 from termcolor import colored
 # ---------------- MSIS NPU Instruction SetV1 --------------------
 from MSIS_NPU_Instruction_SetV1.InstructionSet_Microcode import *
+from MSIS_NPU_Instruction_SetV1.DRAM_Config import DRAM_BASE
 # ---------------- MSIS NPU Instruction SetV2 --------------------
 from MSIS_NPU_Instruction_SetV2.extract_microcode_params import Extract_MicroParams
+from MSIS_NPU_Instruction_SetV2.generate_assembly import Generatate_Assembly
+from MSIS_NPU_Instruction_SetV2.assembler import Assembler
 # ------------------ Activation Addresses ------------------------
 from Model.YOLOv10n_Slim_Address import CONV21_OUTPUT, YOLOv10n_Slim_Address_Map
 from Model.YOLOv10n_Address import CONV52_OUTPUT, YOLOv10n_Address_Map
@@ -219,7 +222,14 @@ def Arch_ScriptGen(args, arch, Weight_Size, Bias_Size,
     
 
 def MicroV2Convertor(args): 
+    # Extract Parameters from MicroScriptV1
     Extract_MicroParams(args)
+    
+    # Generate Assembly Language
+    Generatate_Assembly(args)
+    
+    # Compiler Microcode with Assembler
+    Assembler(args)
 
 if __name__ == "__main__":
     # Define Parse input arguments

@@ -10,6 +10,9 @@ This MicroCompiler is combined of two different machine language version (Microc
 - YOLOv10n
 - Add More Models as needed...
 
+### MicrocodeV1
+* Set the DRAM starting Base Addresses: Weight_BASE, PARAM_BASE, and INPUT_BASE. 
+
 ### MicrocodeV2
 For more details related to Assembly Languages, Assembler, and MicrocodeV2, Please kindly refer to the following link: 
 * [MicrocodeV2](https://github.com/ultralytics)

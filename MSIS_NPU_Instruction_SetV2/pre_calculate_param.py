@@ -144,7 +144,7 @@ def calculate_layer_params(params, operation):
     elif operation == 'LINEAR':
         total_out_width = 1
         total_out_height = 1
-    elif operation == 'MATMUL':
+    elif operation in ['MATMUL','MAIN_PRCS']:
         total_out_width = params.total_width
         total_out_height = params.total_height
     elif operation == 'EWADDER':
@@ -460,25 +460,3 @@ def calculate_addresses(num_layers, total_outch, total_inch, total_width, total_
         addresses.append(addr)
 
     return addresses
-
-def main():
-    """Main function to handle layer generation from configuration file"""
-    try:
-        # Import layer configurations
-        from layer_configs_yolov10 import layer_configs
-        
-        # Convert configurations to layer objects
-        processed_configs = [create_layer_from_config(config) for config in layer_configs]
-        
-        # Generate parameters for all layers
-        generate_multiple_layers(processed_configs)
-        
-        print("\nAll layer parameters have been generated")
-        
-    except ImportError:
-        print("Error: CONFIG file not found!")
-    except Exception as e:
-        print(f"An error occurred: {str(e)}")
-
-if __name__ == "__main__":
-    main() 

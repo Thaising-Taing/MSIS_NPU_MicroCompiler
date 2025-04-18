@@ -1,4 +1,6 @@
-from pre_calculate_param import LayerParams, calculate_layer_params
+from MSIS_NPU_Instruction_SetV2.pre_calculate_param import LayerParams, calculate_layer_params
+import importlib.util
+import os
 
 def convert_operation_to_assembly(op_cfg):
     """Convert operation configuration to assembly format"""
@@ -104,7 +106,7 @@ def write_layer_params(f, layer_num, params,avld):
     f.write(f"HB {results['width_hex']}\n")
     # Write height parameters
     f.write(f"HB {results['height_hex']}\n")
-    # Write IN2_address if it exists
+    # Write IN2_address (write zeros if not present)
     if 'IN2_offset' in params:
         in2_addr = params['IN2_offset']
         if isinstance(in2_addr, int):
@@ -112,6 +114,8 @@ def write_layer_params(f, layer_num, params,avld):
         elif isinstance(in2_addr, str) and not in2_addr.startswith('0x'):
             in2_addr = f"0x{in2_addr}"
         f.write(f"HB {in2_addr}\n")
+    else:
+        f.write("HB 0x00000000\n")
     if avld:
     # Write pre-calculated parameters
         f.write(f"DB {results['total_2d_size']}\n")
@@ -197,7 +201,7 @@ def write_movs_instructions(f, params):
 def read_address_cal_instructions():
     """Read address calculation instructions from address_cal.txt"""
     try:
-        with open('address_cal.txt', 'r') as f:
+        with open('MSIS_NPU_Instruction_SetV2/address_cal.txt', 'r') as f:
             return f.read().strip()
     except FileNotFoundError:
         print("Warning: address_cal.txt not found. ")
@@ -241,7 +245,10 @@ def generate_assembly_instructions(layer_configs, output_file, layer_selection='
 
             f.write(f"NO_OP\n")
             f.write(f"INIT {i-1}\n")
-            f.write(f"LDS 14 LAYER{i}\n")            
+            if avld:
+                f.write(f"LDS 26 LAYER{i}\n") 
+            else:
+                f.write(f"LDS 14 LAYER{i}\n")
             write_movs_instructions(f, config['params'])
             # Write operation instruction
             op_assembly = convert_operation_to_assembly(params['operation_cfg'])
@@ -292,18 +299,25 @@ def generate_assembly_instructions(layer_configs, output_file, layer_selection='
             write_addresses(f, i, config['params'])
             
             # Write layer parameters (height, width, channels,constants)
-            write_layer_params(f, i, config['params'],avld)    
+            write_layer_params(f, i, config['params'],avld)
 
 
-def main():
-    # Import layer configurations
-   # from layer_configs_yolov10 import layer_configs
-    from layer_configs_yolov10n_slim import layer_configs
+def Generatate_Assembly(args):
+    layer_configs_path = os.path.join(args.output_dir, args.model_name, f"layer_configs_{args.model_name}_.py")
     
-    # Generate assembly instructions and write to file
-    output_file = 'assembly_instructions_yolov10_slim.txt'
-    generate_assembly_instructions(layer_configs, output_file, (18,19), avld=True)  # Set avld=True to enable address calculation
-    print(f"Assembly instructions have been written to {output_file}")
+    # Dynamically import the module from the file path
+    spec = importlib.util.spec_from_file_location("layer_configs_module", layer_configs_path)
+    layer_configs_module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(layer_configs_module)
+    
+    # Now you can access layer_configs from the module
+    try: 
+        layer_configs = layer_configs_module.layer_configs
+    except ImportError:
+        print("Error: CONFIG file not found!")
+    except Exception as e:
+        print(f"An error occurred: {str(e)}")
 
-if __name__ == "__main__":
-    main() 
+    # Generate assembly instructions and write to file
+    output_file = os.path.join(args.output_dir, args.model_name, f"assembly_instructions_{args.model_name}.txt")
+    generate_assembly_instructions(layer_configs, output_file, 'all', avld=False)

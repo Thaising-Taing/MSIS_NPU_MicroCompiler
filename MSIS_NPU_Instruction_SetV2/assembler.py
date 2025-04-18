@@ -455,10 +455,11 @@ def assembly_to_microcode(assembly_code):
     return '\n'.join(microcode_output), warnings
 
 
-def process_assembly_file(input_file, output_file):
+def Assembler(args):
     """Process assembly file and write microcode to output file"""
     try:
         # Read assembly code from input file
+        input_file = f"{args.output_dir}/{args.model_name}/assembly_instructions_{args.model_name}.txt"
         with open(input_file, 'r') as f:
             assembly_code = f.read()
         
@@ -479,10 +480,11 @@ def process_assembly_file(input_file, output_file):
                 print(warning)
         
         # Write microcode to output file only if there are no errors
+        output_file = f"{args.output_dir}/{args.model_name}/{args.model_name}_MicrocodeV2.txt"
         with open(output_file, 'w') as f:
             f.write(microcode_output)
         
-        print(f"\nSuccessfully converted assembly to microcode. Output written to {output_file}")
+        # print(f"\nSuccessfully converted assembly to microcode. Output written to {output_file}")
         
     except FileNotFoundError:
         print(f"Error: Could not find input file {input_file}")

@@ -1,13 +1,10 @@
+from MSIS_NPU_Instruction_SetV1.DRAM_Config import DRAM_BASE
+
 # DEBUG - Boolean
 DEBUG = False
 DEBUG_WRITE = False
 DEBUG_ADDR = False
 DEBUG_COMPILER = True
-
-# DRAM Base Address
-WEIGHT_BASE = 0x00000000
-PARAM_BASE  = 0x10000000
-INPUT_BASE  = 0x01000000
 
 # Size of Reordered Weight
 Weight_Size = [144, 1152, 384, 576, 576, 576, 4608, 1536, 3072, 2304, 2304, 2304, 2304, 3072, 288, 
@@ -29,8 +26,8 @@ Bias_Size = [bias * 4 for bias in Bias_Size]
 
 # Calculate Weight & Bias Address
 Weight_Address = []; Bias_Address = []
-weight_address = WEIGHT_BASE
-bias_address = PARAM_BASE
+weight_address = DRAM_BASE["WEIGHT_BASE"]
+bias_address = DRAM_BASE["PARAM_BASE"]
 for weight, bias in zip(Weight_Size, Bias_Size): 
     Weight_Address.append(weight_address)
     Bias_Address.append(bias_address)
@@ -58,7 +55,7 @@ def Activation_Address(layer, operation_name, input_value, output_value):
 #             Layer0             #
 ##################################
 # ConvAct0
-CONV0_INPUT  = INPUT_BASE
+CONV0_INPUT  = DRAM_BASE["INPUT_BASE"]
 CONV0_OUTPUT = CONV0_INPUT + (307200 * 4)
 Activation_Address("layer0", "ConvAct0", [CONV0_INPUT], [CONV0_OUTPUT])
 if DEBUG_ADDR:

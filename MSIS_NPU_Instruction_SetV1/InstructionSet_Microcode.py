@@ -118,14 +118,6 @@ POST_PROC = {
     "SOFTMAX": 5,
 }
 
-# DRAM Base Address
-DRAM_BASE = {
-    "WEIGHT_BASE": 0x00000000,
-    "PARAM_BASE":  0x10000000,
-    "INPUT_BASE":  0x01000000,
-}
-
-
 def Conv_MicroGen(conv_idx, model, Ops, hscale_idx, H_scale, 
                   Weight_Address, Bias_Address,
                   Input_Address, Output_Address,
