@@ -9,13 +9,13 @@ This MicroCompiler is combined of two different machine language version (Microc
 - YOLOv10n-Slim
 - YOLOv10n
 
-### MicrocodeV1
-
 ### MicrocodeV2
+For more details related to Assembly Languages, Assembler, and MicrocodeV2, Please kindly reference to the following link: 
+* [MicrocodeV2](https://github.com/ultralytics):
 
-## Prerequisite 
+## Pre-Requisite 
 ```bash
-$ conda create -n simcompiler python==3.10
+$ conda create -n simcompiler python==3.10.0
 $ pip install torch torchvision torchaudio
 $ pip install numpy scipy thop tabulate argparse
 $ pip install ultralytics ultralytics-thop termcolor opencv-python onnx onnxruntime 
@@ -23,7 +23,7 @@ $ pip install ultralytics ultralytics-thop termcolor opencv-python onnx onnxrunt
 
 ## Usage
 ```bash
-git clone https://github.com/Thaising-Taing/NPU-MicroCompiler.git
+git clone https://github.com/Thaising-Taing/MSIS_NPU_MicroCompiler.git
 ``` 
 
 For Running MicroCompiler, <model_name> can be YOLOv10n or YOLOv10n_Slim
@@ -43,7 +43,7 @@ python MicroCompiler.py --model_name <model_name> --output_dir <dir_name> --imag
 ```
 
 ## Take Home Message
-If you want to extend to support more model, you can just add the new models into the MicroCompiler.py. Moreover, adding your calculating Activation Address into Model directory, and writing your own Architecture script for your model with listing down all the models' operations.
+If you want to extend to support more custom models, you can just add the new models into the MicroCompiler.py. Moreover, adding your calculating Activation Address into Model directory, and writing your own Architecture script for your custom models with listing down all the models' operations.
 
 ## Contact
 Thaising Taing - thaisingtaing@chungbuk.ac.kr
