@@ -602,7 +602,7 @@ if DEBUG_ADDR:
     print(f"\tST_OUT2: START 0x{hex(CONV31_OUTPUT1)[2:].zfill(8)}\t END: 0x{hex(CONV31_OUTPUT1 + (19200 * 4))[2:].zfill(8)}\n")
 
 # "AttnHead0",
-MATMUL0_INPUT1 = CONV29_OUTPUT0                                       # Query-Head0
+MATMUL0_INPUT1 = CONV31_OUTPUT0                                       # Query-Head0
 MATMUL0_INPUT2 = MATMUL0_INPUT1 + (2400 * 4)                          # Key-Head0
 MATMUL0_INPUT3 = MATMUL0_INPUT2 + (2400 * 4)                          # Value-Head0
 MATMUL0_OUTPUT = CONV31_OUTPUT1 + ((2400 + 2400 + 4800) * 4 * 2)      # After CONV13_OUTPUT2 (2-Heads) q,k,v (branch1)
