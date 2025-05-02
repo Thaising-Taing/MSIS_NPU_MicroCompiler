@@ -778,9 +778,9 @@ CONV39_OUTPUT = CONV36_OUTPUT1 + (19200 * 4 * 2) # After CONV36_OUTPUT1 (Split0 
 Activation_Address("layer13", "ConvAct36", [CONV36_INPUT], [CONV36_OUTPUT0, CONV36_OUTPUT1])
 if DEBUG_ADDR:
     print(f"layer13 --> ConvAct36:") 
-    print(f"\tLD_WGT: START: 0x{hex(Weight_Address[13])[2:].zfill(8)}\t END: 0x{hex(Weight_Address[13] + (18432 * 4))[2:].zfill(8)}")
+    print(f"\tLD_WGT: START: 0x{hex(Weight_Address[36])[2:].zfill(8)}\t END: 0x{hex(Weight_Address[36] + (18432 * 4))[2:].zfill(8)}")
     print(f"\tLD_IN1: START: 0x{hex(CONV36_INPUT)[2:].zfill(8)}\t END: 0x{hex(CONV36_INPUT + (115200 * 4))[2:].zfill(8)}")
-    print(f"\tLD_PARAM: START: 0x{hex(Bias_Address[13])[2:].zfill(8)}\t END: 0x{hex(Bias_Address[13] + (64 * 4))[2:].zfill(8)}")
+    print(f"\tLD_PARAM: START: 0x{hex(Bias_Address[36])[2:].zfill(8)}\t END: 0x{hex(Bias_Address[36] + (64 * 4))[2:].zfill(8)}")
     print(f"\tST_OUT1: START 0x{hex(CONV36_OUTPUT0)[2:].zfill(8)}\t END: 0x{hex(CONV36_OUTPUT0 + (19200 * 4 * 2))[2:].zfill(8)}\n")
     print(f"\tST_OUT2: START 0x{hex(CONV36_OUTPUT1)[2:].zfill(8)}\t END: 0x{hex(CONV36_OUTPUT1 + (19200 * 4 * 2))[2:].zfill(8)}\n")
 
