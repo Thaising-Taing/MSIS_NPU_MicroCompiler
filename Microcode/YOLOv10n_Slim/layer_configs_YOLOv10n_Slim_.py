@@ -490,7 +490,7 @@ layer_configs = [
             'tile_in_ch': {'total': 4, 'tile': 4},
             'tile_out_ch': {'total': 128, 'tile': 32},
             'pad_cfg': {'t_ovlp': 0, 'b_ovlp': 0, 'l_ovlp': 0, 'r_ovlp': 0, 'pad_type': 0, 't_pad': 0, 'b_pad': 0, 'l_pad': 0, 'r_pad': 0},
-            'operation_cfg': {'operation': 'EWADDER', 'kernel_size': 0, 'stride': 0, 'post_valid': 0, 'branch': 0, 'q_method': 0},
+            'operation_cfg': {'operation': 'EWADDER', 'kernel_size': 0, 'stride': 0, 'post_valid': 0, 'branch': 0, 'q_method': 1},
             'post_process_cfg': {'active_slope': 0, 'mp_stride': 0, 'prcs1': '0', 'prcs2': '0', 'prcs3': '0', 'prcs4': '0'},
             'quant_param1': {'shift': 0, 'scale': 0},
             'quant_param2': {'shift': 0, 'scale': 0},

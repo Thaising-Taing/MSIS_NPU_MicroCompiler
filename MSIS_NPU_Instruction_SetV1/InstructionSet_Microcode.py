@@ -303,7 +303,7 @@ def Conv_ScriptGen(conv_idx, model, Ops, hscale_idx, H_scale,
         script.write('ctrl_write(OPCODE["LYREND"])\n')
 
 
-def EWAdder_MicroGen(args, layer, Input_Address, Output_Address, Width, Height): 
+def EWAdder_MicroGen(args, layer, Input_Address, Output_Address, Width, Height, Quantized=False): 
     ctrl_write(OPCODE["INIT"])
     setreg_write(OPCODE["SETREG"], OPERAND1["CURRENT_LYR"],   0,     0)
     if args.model_name == "YOLOv10n_Slim":
@@ -337,15 +337,17 @@ def EWAdder_MicroGen(args, layer, Input_Address, Output_Address, Width, Height):
     setreg_write(OPCODE["SETREG"], OPERAND1["IN_WIDTH"],      Width,   Width_Tile_Size)
     setreg_write(OPCODE["SETREG"], OPERAND1["IN_HEIGHT"],     Height,  Height_Tile_Size)
     ovppad_write(OPCODE["SETREG"], OPERAND1["OVERLAP_PAD"],   0,0,0,0, 0, 0,0,0,0)
-
-    mainop_write(OPCODE["OPTYPE"], FUNC_PARAM["EWADDER"],       0,0,0, 0,0, 0)
+    if Quantized: 
+        mainop_write(OPCODE["OPTYPE"], FUNC_PARAM["EWADDER"],       0,0,0, 0,1, 0)
+    else: 
+        mainop_write(OPCODE["OPTYPE"], FUNC_PARAM["EWADDER"],       0,0,0, 0,0, 0)
     offset_write(OPCODE["LD_IN1"],    Input_Address[0])     
     offset_write(OPCODE["LD_IN2"],    Input_Address[1])     
     offset_write(OPCODE["ST_OUT1"],   Output_Address)       
     ctrl_write(OPCODE["LYREND"])
     
 
-def EWAdder_ScriptGen(args, layer, Input_Address, Output_Address, Width, Height, Script_Path): 
+def EWAdder_ScriptGen(args, layer, Input_Address, Output_Address, Width, Height, Script_Path, Quantized=False): 
     with open(Script_Path, mode="a+") as script:
         script.write('ctrl_write(OPCODE["INIT"])\n')
         script.write('setreg_write(OPCODE["SETREG"], OPERAND1["CURRENT_LYR"],   0,     0)\n')
@@ -380,7 +382,10 @@ def EWAdder_ScriptGen(args, layer, Input_Address, Output_Address, Width, Height,
         script.write(f'setreg_write(OPCODE["SETREG"], OPERAND1["IN_WIDTH"],      {Width},   {Width_Tile_Size})\n')
         script.write(f'setreg_write(OPCODE["SETREG"], OPERAND1["IN_HEIGHT"],     {Height},  {Height_Tile_Size})\n')
         script.write('ovppad_write(OPCODE["SETREG"], OPERAND1["OVERLAP_PAD"],   0,0,0,0, 0, 0,0,0,0)\n')
-        script.write('mainop_write(OPCODE["OPTYPE"], FUNC_PARAM["EWADDER"],       0,0,0, 0,0, 0)\n')
+        if Quantized: 
+            script.write('mainop_write(OPCODE["OPTYPE"], FUNC_PARAM["EWADDER"],       0,0,0, 0,1, 0)\n')
+        else:
+            script.write('mainop_write(OPCODE["OPTYPE"], FUNC_PARAM["EWADDER"],       0,0,0, 0,0, 0)\n')
         script.write(f'offset_write(OPCODE["LD_IN1"],    0x{hex(Input_Address[0])[2:].zfill(8)})\n')   
         script.write(f'offset_write(OPCODE["LD_IN2"],    0x{hex(Input_Address[1])[2:].zfill(8)})\n')     
         script.write(f'offset_write(OPCODE["ST_OUT1"],   0x{hex(Output_Address)[2:].zfill(8)})\n')      

@@ -142,7 +142,16 @@ def Arch_MicroGen(args, arch, Weight_Size, Bias_Size,
                 if args.DEBUG_WRITE: 
                     with open(file_path, "a+") as fptr:
                         fptr.write(f"# {op}\n")
-                EWAdder_MicroGen(args, layer, in_addr, out_addr, w, h)
+                if args.model_name == "YOLOv10n_Slim":
+                    if layer == "layer6" and op == "EWAdder0":
+                        EWAdder_MicroGen(args, layer, in_addr, out_addr, w, h, Quantized=True)
+                    else: 
+                        EWAdder_MicroGen(args, layer, in_addr, out_addr, w, h)
+                if args.model_name == "YOLOv10n":
+                    if layer == "layer10" and op == "EWAdder0":
+                        EWAdder_MicroGen(args, layer, in_addr, out_addr, w, h, Quantized=True)
+                    else: 
+                        EWAdder_MicroGen(args, layer, in_addr, out_addr, w, h)
                 if args.DEBUG: print(f"{idx}, {op}")
             elif op.startswith("AttnHead"):
                 if args.DEBUG_WRITE: 
@@ -209,7 +218,16 @@ def Arch_ScriptGen(args, arch, Weight_Size, Bias_Size,
             elif op.startswith("EWAdder"):
                 with open(script_path, "a+") as fptr:
                     fptr.write(f"# {op}\n")
-                EWAdder_ScriptGen(args, layer, in_addr, out_addr, w, h, script_path)
+                if args.model_name == "YOLOv10n_Slim":
+                    if layer == "layer6" and op == "EWAdder0":
+                        EWAdder_ScriptGen(args, layer, in_addr, out_addr, w, h, script_path, Quantized=True)
+                    else:
+                        EWAdder_ScriptGen(args, layer, in_addr, out_addr, w, h, script_path)
+                if args.model_name == "YOLOv10n":
+                    if layer == "layer10" and op == "EWAdder0":
+                        EWAdder_ScriptGen(args, layer, in_addr, out_addr, w, h, script_path, Quantized=True)
+                    else:
+                        EWAdder_ScriptGen(args, layer, in_addr, out_addr, w, h, script_path)
             elif op.startswith("AttnHead"): 
                 with open(script_path, "a+") as fptr:
                     fptr.write(f"# {op}\n")
