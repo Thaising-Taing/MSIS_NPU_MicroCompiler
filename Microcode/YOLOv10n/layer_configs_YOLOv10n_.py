@@ -1246,7 +1246,7 @@ layer_configs = [
             'tile_height': {'total': 20, 'tile': 20},
             'tile_width': {'total': 15, 'tile': 15},
             'tile_in_ch': {'total': 4, 'tile': 4},
-            'tile_out_ch': {'total': 128, 'tile': 32},
+            'tile_out_ch': {'total': 256, 'tile': 32},
             'pad_cfg': {'t_ovlp': 0, 'b_ovlp': 0, 'l_ovlp': 0, 'r_ovlp': 0, 'pad_type': 0, 't_pad': 0, 'b_pad': 0, 'l_pad': 0, 'r_pad': 0},
             'operation_cfg': {'operation': 'RESIZE', 'kernel_size': 2, 'stride': 1, 'post_valid': 0, 'branch': 0, 'q_method': 0},
             'post_process_cfg': {'active_slope': 0, 'mp_stride': 0, 'prcs1': '0', 'prcs2': '0', 'prcs3': '0', 'prcs4': '0'},

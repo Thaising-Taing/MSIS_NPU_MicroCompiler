@@ -130,7 +130,7 @@ def Arch_MicroGen(args, arch, Weight_Size, Bias_Size,
                 if args.DEBUG_WRITE: 
                     with open(file_path, "a+") as fptr:
                         fptr.write(f"# {op}\n")
-                Upsample_MicroGen(in_addr, out_addr, w, h)
+                Upsample_MicroGen(args, layer, op, in_addr, out_addr, w, h)
                 if args.DEBUG: print(f"{idx}, {op}")
             elif op.startswith("MaxPool"):
                 if args.DEBUG_WRITE: 
@@ -210,7 +210,7 @@ def Arch_ScriptGen(args, arch, Weight_Size, Bias_Size,
             elif op.startswith("Upsample"):
                 with open(script_path, "a+") as fptr:
                     fptr.write(f"# {op}\n")
-                Upsample_ScriptGen(in_addr, out_addr, w, h, script_path)
+                Upsample_ScriptGen(args, layer, op, in_addr, out_addr, w, h, script_path)
             elif op.startswith("MaxPool"):
                 with open(script_path, "a+") as fptr:
                     fptr.write(f"# {op}\n")

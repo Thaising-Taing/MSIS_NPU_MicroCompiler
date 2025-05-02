@@ -902,7 +902,7 @@ ctrl_write(OPCODE["LYREND"])
 # Upsample0
 ctrl_write(OPCODE["INIT"])
 setreg_write(OPCODE["SETREG"], OPERAND1["CURRENT_LYR"],   0,     0)
-setreg_write(OPCODE["SETREG"], OPERAND1["OUT_CHANNEL"],   128,   32)
+setreg_write(OPCODE["SETREG"], OPERAND1["OUT_CHANNEL"],   256,   32)
 setreg_write(OPCODE["SETREG"], OPERAND1["IN_CHANNEL"],    4,     4)
 setreg_write(OPCODE["SETREG"], OPERAND1["IN_WIDTH"],      15,   15)
 setreg_write(OPCODE["SETREG"], OPERAND1["IN_HEIGHT"],     20,  20)

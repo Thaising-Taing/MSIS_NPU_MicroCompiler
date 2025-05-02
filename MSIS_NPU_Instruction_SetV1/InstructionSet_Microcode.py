@@ -505,10 +505,16 @@ def Attention_ScriptGen(H_scale, hscale_idx, Input_Address, Output_Address, Widt
         script.write('ctrl_write(OPCODE["LYREND"])\n')
 
 
-def Upsample_MicroGen(Input_Address, Output_Address, Width, Height):
+def Upsample_MicroGen(args, layer, op, Input_Address, Output_Address, Width, Height):
     ctrl_write(OPCODE["INIT"])
     setreg_write(OPCODE["SETREG"], OPERAND1["CURRENT_LYR"],   0,     0)
-    setreg_write(OPCODE["SETREG"], OPERAND1["OUT_CHANNEL"],   128,   32)
+    if args.model_name == "YOLOv10n_Slim":
+        setreg_write(OPCODE["SETREG"], OPERAND1["OUT_CHANNEL"],   128,   32)
+    elif args.model_name == "YOLOv10n":
+        if layer == "layer11" and op == "Upsample0":
+            setreg_write(OPCODE["SETREG"], OPERAND1["OUT_CHANNEL"],   256,   32)
+        else: 
+            setreg_write(OPCODE["SETREG"], OPERAND1["OUT_CHANNEL"],   128,   32)
     setreg_write(OPCODE["SETREG"], OPERAND1["IN_CHANNEL"],    4,     4)
     if Width % 20 == 0: 
         Width_Tile_Size = 20
@@ -528,11 +534,17 @@ def Upsample_MicroGen(Input_Address, Output_Address, Width, Height):
     ctrl_write(OPCODE["LYREND"])
     
 
-def Upsample_ScriptGen(Input_Address, Output_Address, Width, Height, Script_Path):
+def Upsample_ScriptGen(args, layer, op, Input_Address, Output_Address, Width, Height, Script_Path):
     with open(Script_Path, "a+") as script:
         script.write('ctrl_write(OPCODE["INIT"])\n')
         script.write('setreg_write(OPCODE["SETREG"], OPERAND1["CURRENT_LYR"],   0,     0)\n')
-        script.write('setreg_write(OPCODE["SETREG"], OPERAND1["OUT_CHANNEL"],   128,   32)\n')
+        if args.model_name == "YOLOv10n_Slim":
+            script.write('setreg_write(OPCODE["SETREG"], OPERAND1["OUT_CHANNEL"],   128,   32)\n')
+        elif args.model_name == "YOLOv10n":
+            if layer == "layer11" and op == "Upsample0":
+                script.write('setreg_write(OPCODE["SETREG"], OPERAND1["OUT_CHANNEL"],   256,   32)\n')
+            else: 
+                script.write('setreg_write(OPCODE["SETREG"], OPERAND1["OUT_CHANNEL"],   128,   32)\n')
         script.write('setreg_write(OPCODE["SETREG"], OPERAND1["IN_CHANNEL"],    4,     4)\n')
         if Width % 20 == 0: 
             Width_Tile_Size = 20
