@@ -520,10 +520,11 @@ def Upsample_MicroGen(args, layer, op, Input_Address, Output_Address, Width, Hei
         Width_Tile_Size = 20
     else: 
         Width_Tile_Size = Width
-    if Height % 20 == 0: 
-        Height_Tile_Size = 20
-    else: 
-        Height_Tile_Size = Height
+    # if Height % 20 == 0: 
+    #     Height_Tile_Size = 20
+    # else: 
+    #     Height_Tile_Size = Height
+    Height_Tile_Size = 10
     setreg_write(OPCODE["SETREG"], OPERAND1["IN_WIDTH"],      Width,   Width_Tile_Size)
     setreg_write(OPCODE["SETREG"], OPERAND1["IN_HEIGHT"],     Height,  Height_Tile_Size)
     ovppad_write(OPCODE["SETREG"], OPERAND1["OVERLAP_PAD"],   0,0,0,0, 0, 0,0,0,0)
@@ -550,10 +551,11 @@ def Upsample_ScriptGen(args, layer, op, Input_Address, Output_Address, Width, He
             Width_Tile_Size = 20
         else: 
             Width_Tile_Size = Width
-        if Height % 20 == 0: 
-            Height_Tile_Size = 20
-        else: 
-            Height_Tile_Size = Height
+        # if Height % 20 == 0: 
+        #     Height_Tile_Size = 20
+        # else: 
+        #     Height_Tile_Size = Height
+        Height_Tile_Size = 10
         script.write(f'setreg_write(OPCODE["SETREG"], OPERAND1["IN_WIDTH"],      {Width},   {Width_Tile_Size})\n')
         script.write(f'setreg_write(OPCODE["SETREG"], OPERAND1["IN_HEIGHT"],     {Height},  {Height_Tile_Size})\n')
         script.write('ovppad_write(OPCODE["SETREG"], OPERAND1["OVERLAP_PAD"],   0,0,0,0, 0, 0,0,0,0)\n')

@@ -812,9 +812,9 @@ Activation_Address("layer13", "Concat0", [None], [None])
 # "ConvAct37 -- Branch"
 CONV37_INPUT   = CONV36_OUTPUT1          # Concat (Split0 + Split1 + CONV39_OUTPUT)
 CONV37_OUTPUT0 = CONV38_OUTPUT + (19200 * 4) # After CONV38_OUTPUT 
-CONV37_OUTPUT1 = CONV37_OUTPUT0 + (38400 * 4) # After CONV37_OUTPUT0 
 # For Concat--layer13
-CONV44_OUTPUT = CONV37_OUTPUT1 + (38400 * 4) # After CONV37_OUTPUT1
+CONV44_OUTPUT = CONV37_OUTPUT0 + (38400 * 4) # After CONV37_OUTPUT0
+CONV37_OUTPUT1 = CONV44_OUTPUT + (19200 * 4) # After CONV44_OUTPUT 
 Activation_Address("layer13", "ConvAct37", [CONV37_INPUT], [CONV37_OUTPUT0, CONV37_OUTPUT1])
 if DEBUG_ADDR:
     print(f"layer13 --> ConvAct37:") 
@@ -828,7 +828,7 @@ if DEBUG_ADDR:
 #             Layer14            #
 ##################################
 # "Upsample1"
-UPSAMPLE1_INPUT  = CONV44_OUTPUT
+UPSAMPLE1_INPUT  = CONV37_OUTPUT0
 Activation_Address("layer14", "Upsample1", [UPSAMPLE1_INPUT], [UPSAMPLE1_OUTPUT])
 if DEBUG_ADDR:
     print(f"layer14 --> Upsample1:") 
@@ -847,7 +847,7 @@ Activation_Address("layer15", "Concat0", [None], [None])
 ##################################
 # "ConvAct40 -- Branch",
 CONV40_INPUT   = UPSAMPLE1_OUTPUT
-CONV40_OUTPUT0 = CONV44_OUTPUT + (19200 * 4) # After CONV44_OUTPUT 
+CONV40_OUTPUT0 = CONV37_OUTPUT1 + (38400 * 4) # After CONV37_OUTPUT1 
 CONV40_OUTPUT1 = CONV40_OUTPUT0 + (38400 * 4 * 2) # After CONV40_OUTPUT0 (Split0 + Split1)
 # For Concat--layer16
 CONV43_OUTPUT = CONV40_OUTPUT1 + (38400 * 4 * 2) # After CONV40_OUTPUT1 (Split0 + Split1) 
@@ -913,14 +913,14 @@ if DEBUG_ADDR:
 #             Layer18            #
 ##################################
 # "Concat0"
-# CONV37_OUTPUT1 + CONV44_OUTPUT
+# CONV44_OUTPUT + CONV37_OUTPUT1
 Activation_Address("layer18", "Concat0", [None], [None])
 
 ##################################
 #             Layer19            #
 ##################################
 # "ConvAct45 -- Branch",
-CONV45_INPUT   = CONV37_OUTPUT1
+CONV45_INPUT   = CONV44_OUTPUT               # Concat (CONV44_OUTPUT + CONV37_OUTPUT1)
 CONV45_OUTPUT0 = CONV41_OUTPUT + (76800 * 4) # After CONV41_OUTPUT
 CONV45_OUTPUT1 = CONV45_OUTPUT0 + (19200 * 4 * 2) # After CONV45_OUTPUT0 (Split0 + Split1)
 # For Concat--layer19

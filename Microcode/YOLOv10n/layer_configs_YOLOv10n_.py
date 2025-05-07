@@ -1243,7 +1243,7 @@ layer_configs = [
     # Layer 55
     {
         'params': {
-            'tile_height': {'total': 20, 'tile': 20},
+            'tile_height': {'total': 20, 'tile': 10},
             'tile_width': {'total': 15, 'tile': 15},
             'tile_in_ch': {'total': 4, 'tile': 4},
             'tile_out_ch': {'total': 256, 'tile': 32},
@@ -1350,7 +1350,7 @@ layer_configs = [
             'weight_offset': 0x00187740,
             'IN1_offset': 0x01d7a000,
             'output1_offset': 0x01dc5000,
-            'output2_offset': 0x01dea800,
+            'output2_offset': 0x01dfd400,
             'param_offset': 0x100022a0,
         },
         'operation': 'D2_CONV',
@@ -1358,7 +1358,7 @@ layer_configs = [
     # Layer 60
     {
         'params': {
-            'tile_height': {'total': 40, 'tile': 20},
+            'tile_height': {'total': 40, 'tile': 10},
             'tile_width': {'total': 30, 'tile': 30},
             'tile_in_ch': {'total': 4, 'tile': 4},
             'tile_out_ch': {'total': 128, 'tile': 32},
@@ -1371,7 +1371,7 @@ layer_configs = [
             'quant_param4': {'shift': 0, 'scale': 0},
             'quant_param_qk': {'shift': 0, 'scale': 0},
             'C_CONCAT': 2,
-            'IN1_offset': 0x01e10000,
+            'IN1_offset': 0x01dc5000,
             'output1_offset': 0x01834000,
         },
         'operation': 'RESIZE',
@@ -1487,7 +1487,7 @@ layer_configs = [
             'C_CONCAT': 2,
             'weight_offset': 0x001adb40,
             'IN1_offset': 0x01f03c00,
-            'output1_offset': 0x01e10000,
+            'output1_offset': 0x01dea800,
             'param_offset': 0x10002620,
         },
         'operation': 'D2_CONV',
